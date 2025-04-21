@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <!-- App Bar with Menu and Search -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp">
+
+        <!-- Hamburger Menu Icon -->
+
+        <!-- Search Bar -->
+
+        <ImageView
+            android:id="@+id/menuButton"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:contentDescription="Menu"
+            android:src="@drawable/ic_menu" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchBarLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/menuButton"
+            android:layout_toStartOf="@id/searchAction"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20"
+            app:startIconDrawable="@drawable/ic_search"
+            app:startIconTint="@color/gray_600">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search shoes..."
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray_500"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Search Action Icon (optional) -->
+        <ImageView
+            android:id="@+id/searchAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_search"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Search"
+            android:padding="8dp"
+            android:visibility="gone"/>
+    </RelativeLayout>
+</com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- Featured Section -->
+<TextView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="New Arrivals"
+android:textSize="22sp"
+android:textStyle="bold"
+android:paddingHorizontal="24dp"
+android:paddingTop="16dp"
+android:paddingBottom="8dp"
+android:textColor="@color/black" />
+
+    <!-- Horizontal Product Scroller -->
+<androidx.recyclerview.widget.RecyclerView
+android:id="@+id/horizontalRecyclerView"
+android:layout_width="match_parent"
+android:layout_height="220dp"
+android:clipToPadding="false"
+android:orientation="horizontal"
+android:paddingStart="16dp"
+android:paddingEnd="8dp"
+app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+tools:listitem="@layout/item_product_horizontal" />
+
+<TextView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="Categories"
+android:textSize="22sp"
+android:textStyle="bold"
+android:paddingHorizontal="24dp"
+android:paddingTop="24dp"
+android:paddingBottom="8dp"
+android:textColor="@color/black" />
+
+    <!-- Category Chips -->
+<com.google.android.material.chip.ChipGroup
+android:id="@+id/categoryChips"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:paddingHorizontal="16dp"
+android:paddingBottom="16dp"
+app:singleSelection="true">
+<com.google.android.material.chip.Chip
+    android:id="@+id/chipAll"
+    style="@style/Widget.MaterialComponents.Chip.Choice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="All Shoes"
+    android:checked="true"/>
+
+<com.google.android.material.chip.Chip
+    android:id="@+id/chipRunning"
+    style="@style/Widget.MaterialComponents.Chip.Choice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Running"/>
+
+<com.google.android.material.chip.Chip
+    android:id="@+id/chipCasual"
+    style="@style/Widget.MaterialComponents.Chip.Choice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Casual"/>
+
+<com.google.android.material.chip.Chip
+    android:id="@+id/chipFootball"
+    style="@style/Widget.MaterialComponents.Chip.Choice"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Football"/>
+</com.google.android.material.chip.ChipGroup>
+
+    <!-- Vertical Product Grid -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_product" />
+
+    <!-- Bottom Navigation -->
+<com.google.android.material.bottomnavigation.BottomNavigationView
+android:id="@+id/bottomNavigation"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/white"
+android:elevation="8dp"
+app:itemIconTint="@color/bottom_nav_colors"
+app:itemTextColor="@color/bottom_nav_colors"
+app:labelVisibilityMode="labeled"
+app:menu="@menu/bottom_nav_menu" />
+    </LinearLayout>
