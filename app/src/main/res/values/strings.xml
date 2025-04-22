@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">ShoeStore</string>
+    <string name="app_name" translatable="false">ShoeStore</string>
+        <string name="description_label">Description</string>
+        <string name="size_label">Size</string>
+        <string name="quantity_label">Quantity</string>
+        <string name="add_to_cart">Add to Cart</string>
+        <string name="buy_now">Buy Now</string>
+
+    <string name="product_description_format">Brand: %s</string>
+    <string name="category_format">Category: %s</string>
+    <string name="gender_format">Gender: %s</string>
+
+    <string name="product_image_desc">Product image</string>
+    <string name="toggle_favorite">Toggle favorite</string>
+    <string name="product_details">Details</string>
+    <string name="category_label">Category:</string>
+    <string name="gender_label">Gender:</string>
+
+        <string name="price_format">$%.2f</string>
+        <string name="items_left_format">Only %d left in stock!</string>
+        <string name="error_loading_product">Error loading product details.</string>
+        <string name="max_quantity_reached">Maximum quantity reached</string>
+        <string name="added_to_favorites">Added to favorites</string>
+        <string name="removed_from_favorites">Removed from favorites</string>
+        <string name="add_to_favorites">Add to favorites</string>
+        <string name="remove_from_favorites">Remove from favorites</string>
+        <string name="please_select_size">Please select a size</string>
+        <string name="added_to_cart_message">Added %1$d %2$s to cart</string>
+        <string name="proceeding_to_checkout">Proceeding to checkout</string>
 </resources>

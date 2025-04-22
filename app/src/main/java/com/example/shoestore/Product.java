@@ -14,7 +14,7 @@ public class Product implements Serializable {
     private String category;
     private String gender;
     private String brand;
-    private float rating;
+    private float Rating;
     private int items_left;
 
     public Product() {
@@ -22,7 +22,7 @@ public class Product implements Serializable {
     }
 
     public Product(String name, int id, String imageURL, double price, long timestamp,
-                   String category, String gender, float rating, int items_left, String brand) {
+                   String category, String gender, float Rating, int items_left, String brand) {
         this.name = name;
         this.id = id;
         this.imageURL = imageURL;
@@ -30,7 +30,7 @@ public class Product implements Serializable {
         this.timestamp = timestamp;
         this.category = category;
         this.gender = gender;
-        this.rating = rating;
+        this.Rating = Rating;
         this.items_left = items_left;
         this.brand = brand;
     }
@@ -81,7 +81,7 @@ public class Product implements Serializable {
     }
 
     public float getRating() {
-        return rating;
+        return Rating;
     }
 
     public int getItems_left() {

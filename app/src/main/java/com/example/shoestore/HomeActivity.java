@@ -42,8 +42,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-
         // Initialize Firebase references
         productsRef = FirebaseDatabase.getInstance().getReference("products");
 
@@ -107,7 +105,8 @@ public class HomeActivity extends AppCompatActivity {
                     try {
                         Product product = childSnapshot.getValue(Product.class);
                         if (product != null) {
-                            product.setId(Integer.parseInt(childSnapshot.getKey())); // Convert string key to int
+                            product.setId(Integer.parseInt(childSnapshot.getKey()));
+                            // Convert string key to int
                             if (product.getImageURL() != null) {
                                 productList.add(product);
                             }

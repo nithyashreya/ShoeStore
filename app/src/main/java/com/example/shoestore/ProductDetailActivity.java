@@ -1,7 +1,9 @@
 package com.example.shoestore;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -10,37 +12,49 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
     // UI Elements
     private ImageView productImage;
-    private TextView productName, productPrice, productDescription, quantityText, itemsLeft;
+    private ImageButton favoriteButton;
+    private TextView productName, productPrice, productDescription;
+    private TextView itemsLeft, quantityText;
     private RatingBar productRating;
-    private Button addToCart, buyNow, increaseQty, decreaseQty;
+    private MaterialButton addToCart, buyNow;
+    private Button increaseQty, decreaseQty;
 
     // Data
     private int quantity = 1;
     private Product product;
+    private ProductAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
-        initializeViews();
-        loadProductFromIntent();
-        setupListeners();
+        initializeViews(); // Initialize views FIRST
+        adapter = new ProductAdapter(this, new ArrayList<>(), false);
+        loadProductFromIntent(); // Then load product data
+        setupListeners(); // Finally set up listeners
+
+        // Initialize adapter AFTER product is loaded
+
     }
 
     private void initializeViews() {
         productImage = findViewById(R.id.productImage);
+        favoriteButton = findViewById(R.id.favoriteButton);
         productName = findViewById(R.id.productName);
         productPrice = findViewById(R.id.productPrice);
         productDescription = findViewById(R.id.productDescription);
-        productRating = findViewById(R.id.productRating);
-        quantityText = findViewById(R.id.quantityText);
         itemsLeft = findViewById(R.id.itemsLeft);
+        quantityText = findViewById(R.id.quantityText);
+        productRating = findViewById(R.id.productRating);
         addToCart = findViewById(R.id.addToCart);
         buyNow = findViewById(R.id.buyNow);
         increaseQty = findViewById(R.id.increaseQty);
@@ -51,25 +65,40 @@ public class ProductDetailActivity extends AppCompatActivity {
         product = (Product) getIntent().getSerializableExtra("product");
 
         if (product != null) {
+            // Basic product info
             productName.setText(product.getName());
-            productPrice.setText("$" + product.getPrice());
-            productDescription.setText("Brand: " + product.getBrand());
-            productRating.setRating((float) product.getRating()); // load rating from dataset
-            itemsLeft.setText("Only " + product.getItems_left() + " left in stock!");
+            productPrice.setText(getString(R.string.price_format, product.getPrice()));
+            productDescription.setText(getString(R.string.product_description_format, product.getBrand()));
+
+            // Stock information
+            itemsLeft.setText(getString(R.string.items_left_format, product.getItems_left()));
             quantityText.setText(String.valueOf(quantity));
 
-            Glide.with(this).load(product.getImageURL()).into(productImage);
+            productRating.setRating(product.getRating());
+
+            // Load product image
+            Glide.with(this)
+                    .load(product.getImageURL())
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .into(productImage);
+
+            // Setup favorite button AFTER product is loaded and views are initialized
+            adapter.setupFavoriteButton(favoriteButton, product);
         } else {
-            Toast.makeText(this, "Error loading product details.", Toast.LENGTH_SHORT).show();
-            finish(); // Go back if no product is received
+            Toast.makeText(this, "Product not available", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
     private void setupListeners() {
+        // Quantity controls
         increaseQty.setOnClickListener(v -> {
             if (quantity < product.getItems_left()) {
                 quantity++;
                 quantityText.setText(String.valueOf(quantity));
+            } else {
+                Toast.makeText(this, R.string.max_quantity_reached, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -80,14 +109,16 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
+        // Add to cart
         addToCart.setOnClickListener(v -> {
-            // Add to cart logic
-            Toast.makeText(this, "Added to cart", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    getString(R.string.added_to_cart_message, quantity, product.getName()),
+                    Toast.LENGTH_SHORT).show();
         });
 
+        // Buy now
         buyNow.setOnClickListener(v -> {
-            // Proceed to payment logic
-            Toast.makeText(this, "Proceed to buy", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.proceeding_to_checkout, Toast.LENGTH_SHORT).show();
         });
     }
 }
